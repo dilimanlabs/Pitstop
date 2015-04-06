@@ -1,0 +1,15 @@
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-color: #245269;
+}
+.angular-google-map-container {
+  width: 100%;
+  height: 90vh;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pitstopWebApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Pitstop Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300italic,100,300,400italic,700,900">
+
+    <link rel="stylesheet" href="PitstopWebApp.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxLtQSMQFD1nxLwslPVPtRB14jdkn3rDw"></script>
+    <script src="lodash.underscore.js"></script>
+    <script src="angular.js"></script>
+    <script src="PitstopWebApp.js"></script>
+
+</head>
+<body>
+    <header class="main-header">
+        <img src="pitstop.png" alt="Pitstop Logo" width="40" height="40" class="pitstop-logo"/>
+        <div class="menu">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </header>
+    <div ng-view></div>
+</body>
+</html>

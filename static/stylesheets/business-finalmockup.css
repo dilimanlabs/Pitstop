@@ -1,0 +1,388 @@
+/*  MAIN CSS & MOBILE CSS*/
+@font-face {
+    font-family: motorOil;
+    src: url(MotorOil.ttf);
+}
+@font-face {
+    font-family: Catull;
+    src: url(Catull.ttf);
+}
+* {
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: "PetitaBold", "Times", sans-serif;
+    cursor: default;
+}
+ul, li {
+    list-style: none;
+}
+h1,h2,h3,h4,h5,h6,p{
+    margin: 0;
+    padding: 0;
+}
+
+@media only screen and (min-width: 1024px) {
+header {
+    color: #fff; 
+    background-image: url(business-banner.png);
+	background-size: cover;
+    height: 198px;
+    width: 100%;
+}
+.business-banner {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 50px 0;
+}    
+.business-banner h1 {
+    font-size: 40px; 
+}
+.business-banner p {
+    font-size: 18px;
+    font-family: Segoe Ui;
+}
+/*     ABOUT THE CONTENT     */       
+.features {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.description {
+    width:50%;
+    max-width: 800px;
+    float: left;
+    font-family: Segoe Ui;
+    margin-top: 80px;
+    color: #394B57;
+}
+.description:nth-child(even) {
+    margin-right: 50px;
+}
+.description h1 {
+    font-size: 18px;
+    font-weight: 700;
+}
+.description p {
+    font-size: 18px;
+    font-weight: lighter;
+    font-weight: 300;
+}   
+.content {
+    margin: 20px 0;
+}
+.content:nth-child(even) .description {
+    float: right;
+}
+.content:not(last-child) {
+    margin-top: 100px;
+}
+    .content:last-child {
+    margin-bottom: 50px;
+}
+   
+    
+/*     ENLISTING BUSINESS     */    
+.enlist {
+    background-color: #394B57;
+    height: auto;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    font-family: Segoe Ui;
+    font-weight: 300;
+    padding: 10px;
+}
+.enlist .text-enlist {
+    padding: 2em;
+}
+.enlist h1{
+    font-family: "PetitaMedium";
+    font-size: 30px;
+    font-weight: 300;
+}
+.enlist h2 {
+    font-size: 20px;
+    font-weight: lighter;
+}
+.enlist h3 {
+    font-size: 18px;
+    font-weight: lighter;
+    padding: 1em;
+}
+.enlist p {
+    font-size: 12px;
+    font-weight: lighter;
+}
+.radio {
+    font-size: 12px;
+    padding: 5px;
+}
+span {
+    padding: 0 20px;
+}
+.form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}    
+input[type="text"] {
+    font-family: "PetitaLight", "Times", sans-serif;
+    color: #fff;
+    width: 450px;
+    height: 40px;
+    background-color: #2b3841 ;
+    border: none;
+    margin: 10px;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+::-webkit-input-placeholder {
+    color: #fff;
+    font-family: Segoe Ui;
+    font-size: 11px;
+    font-weight: lighter;
+    font-weight: 300;
+}
+.btnFeedback {
+    width: 120px;
+    height: 45px;
+    background-color: #00bbc9;
+    border-radius: 4px;
+    border: none;
+    border-bottom: 3px solid #227f80;
+    color: #fff;
+    font-size: 15px; 
+    font-family: "PetitaLight", "Times", sans-serif;
+    margin: 30px 0;
+    -webkit-filter: brightness(1);
+}
+.btnFeedback:hover {
+    -webkit-filter: brightness(0.9);
+}
+.fullname {
+    background-image: url(before_fullname.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.position {
+    background-image: url(before_position.fw.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.eadd {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.bname {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.btype {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.address {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.web {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.etc {
+    background-image: url(before_emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.number {
+    background-image: url(before_phonenumber.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+/*  HOVER & FOCUS  */
+.fullname:hover, .fullname:focus {
+    background-image: url(fullname.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.position:hover, .position:focus {
+    background-image: url(position.fw.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.eadd:hover , .eadd:focus {
+    background-image: url(emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.bname:hover, .bname:focus {
+    background-image: url(emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.btype:hover, .btype:focus {
+    background-image: url(emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.address:hover, .address:focus {
+    background-image: url(emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.web:hover , .web:focus {
+    background-image: url(emailadd.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+.number:hover, .number:focus {
+    background-image: url(phonenumber.png);
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+    
+    
+/*  PAGE 5 - FOOTER CONTACT*/
+.footer-contact {
+    position: relative;
+    height: 320px;
+    background-color: #2b3841;
+}
+.footer-content {
+    margin: 0 auto;
+    padding: 10px;
+    top: 10%;
+    position: relative;
+    width: 750px;
+}
+.footer-content p{
+    margin: 0 auto;;
+    color: #fff;
+    font-size: 18px;
+    font-family: Segoe Ui;
+    font-weight: lighter;
+    padding: 2px;
+}
+.footer-content h1{
+    margin: 0 auto;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    font-family: "PetitaLight", sans-serif;
+    font-weight: 300;
+    padding: 20px;
+}
+.footer-content .pull-left {
+    float: left;
+    margin-left: 70px;
+}
+.footer-content .pull-right {
+    float: right;
+    padding: 0px 30px;
+}
+.footer-content .pull-right a {
+    text-decoration: none;
+    color: #00bbc9;
+}
+.social-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.social-links li{
+    display: inline;
+    float: left;
+    padding: 0px 5px;
+}
+.social-links li a {
+    background-image: url(before_social-links.png);
+    display: block;
+    text-decoration: none;
+    width: 23px;
+    height: 23px;
+}
+
+.social-links li a:hover,.social-links li a:focus {
+    background-image: url(social-links.png);
+    display: block;
+    text-decoration: none;
+    width: 23px;
+    height: 23px;
+}
+.social-links li a.facebook {
+    background-position: 0 0;
+}
+.social-links li a.instagram {
+    background-position: -23px 0;
+}
+.social-links li a.linkedin {
+    background-position: -46px 0;
+}
+.social-links li a.twitter {
+    background-position: -69px 0;
+}
+.social-links li a.youtube {
+    background-position:  -92px 0;
+}
+.social-links li a.tumblr {
+    background-position: 23px 0;
+}
+
+.social-links li a.facebook:hover, .social-links li a.facebook:focus {
+    background-position: 0 0;
+}
+.social-links li a.instagram:hover, .social-links li a.instagram:focus  {
+    background-position: -23px 0;
+}
+.social-links li a.linkedin:hover, .social-links li a.linkedin:focus {
+    background-position: -46px 0;
+}
+.social-links li a.twitter:hover, .social-links li a.twitter:focus {
+    background-position: -69px 0;
+}
+.social-links li a.youtube:hover, .social-links li a.youtube:focus {
+    background-position:  -92px 0;
+}
+.social-links li a.tumblr:hover, .social-links li a.tumblr:focus {
+    background-position: 23px 0;
+}
+/*  END OF PAGE 5 - FOOTER CONTACT*/
+
+
+
+/*  FOOTER BOTTOM   */
+footer {
+    background-color: #2b3841;
+    color: #fff;
+    position: relative;
+}
+footer p {
+    margin: 0;
+    font-size: 14px;
+    font-family: Segoe Ui;
+    font-weight: 300;
+}
+.footer a {
+    text-decoration: none;
+    color: #00bbc9;
+    font-family: motorOil;
+}
+.footer {
+    text-align: center;
+    padding: 1.2em 0;
+}
+   
+/*  End of Website  */         
+
+    
+}

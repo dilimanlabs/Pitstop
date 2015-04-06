@@ -1,0 +1,54 @@
+<ul class="item tab">
+    <li><a ng-click="listBusinesses()"><strong>List</strong></a>
+    </li>
+    <li><a ng-click="createBusiness()"><strong>Create</strong></a>
+    </li>
+</ul>
+
+<div class="item" ng-repeat="(url, business) in businesses| object2Array | orderBy: 'registeredName'" ng-click="onBusinessClick(business)">
+    <div class="item-img">
+        <img ng-src="{{business.primaryImage ? business.primaryImage + '.jpeg?height=56&width=56' : ''}}" />
+    </div>
+    <p class="item-content">
+        <strong>{{business.name}}</strong>
+        <br> {{business.registeredName}}
+        <br> {{business.description}}
+        <br> {{business.url}}
+    </p>
+</div>
+
+<div class="item" align="center" ng-click="listMoreBusinesses()" ng-show="businessesCursor">
+    <p><strong>Load More</strong>
+    </p>
+</div>
+
+<script type="text/ng-template" id="BusinessModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Create Business</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="" ng-model="business.name">
+            </div>
+
+            <div class="form-group">
+                <label for="registeredName">Registered Name</label>
+                <input type="text" class="form-control" id="registeredName" placeholder="" ng-model="business.registeredName">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" rows="3" id="textArea" ng-model="business.description"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="create()">Create</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

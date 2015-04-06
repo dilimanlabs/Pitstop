@@ -1,0 +1,69 @@
+<ul class="item tab">
+    <li><a ng-click="listCategories()"><strong>List</strong></a>
+    </li>
+    <li><a ng-click="createCategory()"><strong>Create</strong></a>
+    </li>
+</ul>
+
+<div class="item" ng-repeat="(url, category) in categories | object2Array | orderBy: 'name'" ng-click="onCategoryClick(category)">
+    <div class="item-img">
+        <img ng-if="category.primaryImage" ng-src="{{category.primaryImage + '.jpeg?height=56&width=56'}}" />
+    </div>
+    <p class="item-content">
+        <strong>{{category.name}}</strong> {{category.pluralName}}
+        <br> {{category.description}}
+        <br> {{category.url}}
+    </p>
+</div>
+</div>
+
+<div class="item" align="center" ng-click="listMoreCategories()" ng-show="categoriesCursor">
+    <p><strong>Load More</strong>
+    </p>
+</div>
+
+<script type="text/ng-template" id="CategoryModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title" ng-if="mode === 'CREATE'">Create Category</h3>
+        <h3 class="modal-title" ng-if="mode === 'EDIT'">Edit Category</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="well img-album" flow-drop flow-init='{singleFile: true}' flow-name="uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-drag-enter="style={}" flow-drag-leave="style={}">
+            <div class="img-container" ng-repeat="image in images track by image.url" ng-click="onImageClick(image)" ng-class="{selected: image.url === page.primaryImage}">
+                <img class="img" ng-src='{{image.url}}.jpeg?height=112&width=112' />
+            </div>
+
+            <div class="img-uploader" ng-show="uploader.flow.files.length" ng-if="mode === 'EDIT'">
+                <img class="img" flow-img="uploader.flow.files[0]" />
+                <input type="text" class="form-control" id="img_name" placeholder="" ng-model="uploader.flow.files[0].name">
+                <button ng-click="uploader.flow.files[0].cancel()">Remove</button>
+                <button ng-click="upload()">Upload</button>
+            </div>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="" ng-model="category.name">
+            </div>
+
+            <div class="form-group">
+                <label for="pluralName">Plural Name</label>
+                <input type="text" class="form-control" id="pluralName" placeholder="" ng-model="category.pluralName">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" rows="3" id="textArea" ng-model="category.description"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="mode === 'CREATE'" ng-click="create()">Create</button>
+        <button class="btn btn-primary" ng-if="mode === 'EDIT'" ng-click="save()">Save</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

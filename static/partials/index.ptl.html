@@ -1,0 +1,6 @@
+<div class="container">
+    <google-map center="map.center" zoom="map.zoom" draggable="true" control="map.control" events="map.events" bounds="map.bounds" options="map.options">
+        <markers models="estabMarkers" coords="'self'" events="markersEvents"></markers>
+    </google-map>
+    <estab-card class="estab-info card-show-hide" ng-show="cardVisible"></estab-card>
+</div>

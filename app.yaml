@@ -1,0 +1,62 @@
+application: pitstop-dilimanlabs
+version: 1
+runtime: python27
+threadsafe: true
+api_version: 1
+
+handlers:
+- url: /(.*\.css)
+  static_files: static/stylesheets/\1
+  upload: static/stylesheets/(.*\.css)
+
+- url: /(.*\.js)
+  static_files: static/scripts/\1
+  upload: static/scripts/(.*\.js)
+
+- url: /(.*\.ttf)
+  static_files: static/typefaces/\1
+  upload: static/typefaces/(.*\.ttf)
+
+- url: /(.*\.ptl.html)
+  static_files: static/partials/\1
+  upload: static/partials/(.*\.ptl.html)
+
+- url: /admin.*
+  script: admin.main.app
+  login: admin
+
+- url: .*/images/.*
+  script: img.app
+
+- url: /(.*\.(gif|png|jpg|ico))
+  static_files: static/images/\1
+  upload: static/images/(.*\.(gif|png|jpg|ico))
+  expiration: '365d'
+
+- url: /(.*\.svg)
+  static_files: static/images/\1
+  upload: static/images/(.*\.svg)
+  mime_type: image/svg+xml
+  expiration: '365d'
+
+- url: /forms/.*
+  script: forms_api.service
+
+- url: /.*
+  script: main.app
+
+builtins:
+- deferred: on
+
+inbound_services:
+- warmup
+
+libraries:
+- name: jinja2
+  version: latest
+
+- name: webapp2
+  version: "2.5.2"
+
+- name: endpoints
+  version: 1.0
