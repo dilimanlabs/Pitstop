@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js" ></script>
+    <link rel="stylesheet" href="business.css">
+    <title>Business Page</title>
+    <script src="bind-polyfill.js"></script>
+    <script src="smooth-scroll.js"></script>
+    <script>
+        smoothScroll.init();
+    </script>
+</head>
+<body ng-app="adminApp" id="main">
+<header>
+    <nav>
+        <ul>
+            <li><a data-scroll href="#main">FEATURES</a></li>
+            <li><a data-scroll href="#nav">PARTNERS</a></li>
+            <li><a data-scroll href="#contacts">CONTACT</a></li>
+            <li><a data-scroll href="#enlist">ENLIST</a></li>
+            <a href="http://pitstop.dilimanlabs.com/"><img src="pitstop_logo.svg" alt="pitstop"></a>
+        </ul>
+    </nav>
+</header>
+<div class="header"></div>
+<!-- CONTENT -->
+
+
+<div class="container">
+    <!-- MAIN CONTENT -->
+     <div class="business">
+        <div class="business-content">
+            <img src="content.png">
+        </div>
+     </div>
+    
+     
+<!-- ENLISTING BUSINESS -->
+<div class="enlist" id="enlist" data-scroll>
+    <div class="text-enlist">
+    <h1>Join our Growing Community</h1>
+    <h2>Fill up the form and well get back to you as soon as possible.</h2>
+    </div>
+    <div class="form">
+       <form ng-controller="BusinessPageFormController">
+        <input type="text" placeholder="* FULL NAME :" class="fullname" name="fullName" ng-model="request.businesspageform.fullName">
+        <input type="text" placeholder="* POSTION :" class="position" name="position" ng-model="request.businesspageform.position">
+        <input type="text" placeholder="* PHONE NUMBER :" class="number" name="phoneNumber" ng-model="request.businesspageform.phoneNumber">
+        <input type="text" placeholder="* EMAIL ADDRESS :" class="eadd" name="emailAddress" ng-model="request.businesspageform.emailAddress">
+        <h3>TELL US MORE ABOUT YOUR BUSINESS</h3>
+        <div class="radio">
+        <span><input type="radio"  name="smallBusiness" ng-model="request.businesspageform.businessSize" checked="true"> SMALL BUSINESS</span> 
+        <span><input type="radio"  name="smallBusiness" ng-model="request.businesspageform.businessSize"> NATIONAL CHAIN/BRAND</span>
+        <span><input type="radio"  name="smallBusiness" ng-model="request.businesspageform.businessSize"> FRANCHISE</span>
+        </div>
+        <input type="text" placeholder="* BUSINESS NAME :" class="bname" name="businessName" ng-model="request.businesspageform.businessName">
+        <input type="text" placeholder="* BUSINESS TPYE :" class="btype" name="businessType" ng-model="request.businesspageform.businessType">
+        <input type="text" placeholder="* ADDRESS :" class="address" name="businessAddress" ng-model="request.businesspageform.businessAddress">
+        <input type="text" placeholder="* OFFICIAL WEBSITE :" class="web" name="businessWebsite" ng-model="request.businesspageform.businessWebsite">
+        <p><button class="btnSubmit" ng-click="create(request)" type="submit">SUBMIT</button></p>
+        </form>
+    </div>
+</div>
+<div class="page5-container">
+<div class="footer">
+        <div class="footer-content" data-scroll id="contacts">
+           <h1>You can reach us Here</h1>
+            <div class="pull-left">
+                <p>Unit 3 Open TBI, DOST-ASTI</p>
+                <p>C.P Garcia Avenue,</p>
+                <p>Diliman Quezon City,</p>
+                <p>1101, Philippines</p> 
+            </div>
+            <div class="pull-right">
+                <p>Karlos Naidas</p>
+                <p>CEO</p>
+                <p><abbr title="Phone">P:</abbr>+63 917-7198-865</p>
+                <p><a href="mailto:#">Hello@dilimanlabs.com</a></p>
+            </div>
+        </div>
+    </div>
+ </div>      
+</div>
+<footer>
+    <p>&copy;COPYRIGHT 2014 <a href="http://pitstop.dilimanlabs.com/">PITSTOP</a> ALL RIGHTS RESERVED | DILIMAN LABS </p>
+</footer>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-55963468-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+    angular.module('adminApp', [])
+      .controller('BusinessPageFormController', ['$scope', '$window', '$http', function($scope, $window, $http) {
+        $scope.create = function(obj) {
+          var headers = {'Content-Type': 'application/json'};
+          $http({method: 'POST', url: 'http://pitstop.dilimanlabs.com/forms/businesspage.create',
+            'headers': headers, 'data': JSON.stringify(obj)}).
+            success(function(data, status, headers, config) {
+              $window.alert('New Business created.')
+            }).
+            error(function(data, status, headers, config) {
+              $window.alert('Error\n' + JSON.stringify(data))
+            });
+        }
+      }])
+      </script>
+</body>
+</html>

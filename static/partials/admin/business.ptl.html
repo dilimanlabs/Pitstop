@@ -1,0 +1,44 @@
+<div class="Left">
+    <div class="well img-album" flow-drop flow-init='{singleFile: true}' flow-name="uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-drag-enter="style={}" flow-drag-leave="style={}">
+        <div class="img-container" ng-repeat="image in images track by image.url" ng-click="onImageClick(image)" ng-class="{selected: image.url === business.primaryImage}">
+            <img class="img" ng-src='{{image.url}}.jpeg?height=112&width=112' />
+        </div>
+
+        <div class="img-uploader" ng-show="uploader.flow.files.length">
+            <img class="img" flow-img="uploader.flow.files[0]" />
+            <input type="text" class="form-control" id="img_name" placeholder="" ng-model="uploader.flow.files[0].name">
+            <button ng-click="uploader.flow.files[0].cancel()">Remove</button>
+            <button ng-click="upload()">Upload</button>
+        </div>
+    </div>
+
+    <form style="padding: 16px;">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="" ng-model="business.name">
+        </div>
+        <div class="form-group">
+            <label for="registeredName">Registered Name</label>
+            <input type="text" class="form-control" id="registeredName" placeholder="" ng-model="business.registeredName">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" rows="3" id="textArea" ng-model="business.description"></textarea>
+        </div>
+
+        <button class="btn btn-primary" ng-click="save()">Save</button>
+    </form>
+</div>
+
+<div class="Right">
+    <ul class="item tab">
+        <li><a ui-sref="business.products" ui-sref-active="selected"><strong>Prods</strong></a>
+        </li>
+        <li><a ui-sref="business.pages" ui-sref-active="selected"><strong>Pages</strong></a>
+        </li>
+        <li><a ui-sref="business.establishments" ui-sref-active="selected"><strong>Ests</strong></a>
+        </li>
+    </ul>
+
+    <div ui-view></div>
+</div>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Business Page</title>
+<link rel="stylesheet" href="business.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
+</head>
+<body ng-app="adminApp">
+
+<header>
+	<div class="business-banner">
+	<h1>PITSTOP FOR BUSINESS</h1>
+	<p>Enlist your business on Pitstop, make it easier for customers to look for you.</p>
+	</div>
+	<nav>
+	    
+	</nav>		
+</header>
+<!--     ABOUT THE CONTENT     -->
+<div class="features">
+    <img src="content.png">
+</div>
+<!--
+<div class="features">
+    <div class="content">
+        <img src="assets/images/businessImg1.fw.png">
+        <div class="description">
+            <h1>Your shop will be displayed on Pitstop's map interface.</h1>
+            <p>Users would be able to look for you and navigate to where your located easily.</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        <img src="assets/images/businessImg2.fw.png">
+        <div class="description">
+            <h1>Broadcast your Promos.</h1>
+            <p>Broadcast your promos and deals through Pitstop. We want to help you maximize reach to automotive users and enthusiasts.</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        <img src="assets/images/businessImg3.fw.png">
+        <div class="description">
+            <h1>Keep your customers up to date.</h1>
+            <p>Update Pitstop users if you have a new branch, offerings and promos. With pitstop, your customers will be always updated in just one tap.</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        <img src="assets/images/businessImg4.fw.png">
+        <div class="description">
+            <h1>Dedicated pages for your brand.</h1>
+            <p>You will have your own dedicated page wherein you will be able to showcase your products, services, amenities, and others. Let your customers know what you are offering.</p>
+        </div>
+    </div>  
+</div>
+-->
+<!--     END OF THE ABOUT THE CONTENT     -->
+
+
+<!--     ENLISTING BUSINESSES     -->
+<div class="enlist">
+    <div class="text-enlist">
+    <h1>Join our Growing Community</h1>
+    <h2>Fill up the form and well get back to you as soon as possible.</h2>
+    </div>
+    <div class="form">
+        <form ng-controller="BusinessPageFormController">
+        <input type="text" placeholder="* FULL NAME :" class="fullname" name="fullName" ng-model="request.businesspageform.fullName">
+        <input type="text" placeholder="* POSTION :" class="position" name="position" ng-model="request.businesspageform.position">
+        <input type="text" placeholder="* PHONE NUMBER :" class="number" name="phoneNumber" ng-model="request.businesspageform.phoneNumber">
+        <input type="text" placeholder="* EMAIL ADDRESS :" class="eadd" name="emailAddress" ng-model="request.businesspageform.emailAddress">
+        <h3>TELL US MORE ABOUT YOUR BUSINESS</h3>
+        <div class="radio">
+        <span><input type="radio" name="smallBusiness" value="Small Business" ng-model="request.businesspageform.businessSize"> SMALL BUSINESS</span> 
+        <span><input type="radio" name="smallBusiness" value="National Chain/Brand" ng-model="request.businesspageform.businessSize"> NATIONAL CHAIN/BRAND</span>
+        <span><input type="radio" name="smallBusiness" value="Franchise" ng-model="request.businesspageform.businessSize"> FRANCHISE</span>
+        </div>
+        <input type="text" placeholder="* BUSINESS NAME :" class="bname" name="businessName" ng-model="request.businesspageform.businessName">
+        <input type="text" placeholder="* BUSINESS TPYE :" class="btype" name="businessType" ng-model="request.businesspageform.businessType">
+        <input type="text" placeholder="* ADDRESS :" class="address" name="businessAddress" ng-model="request.businesspageform.businessAddress">
+        <input type="text" placeholder="* OFFICIAL WEBSITE :" class="web" name="businessWebsite" ng-model="request.businesspageform.businessWebsite">
+        <p><button class="btnFeedback" ng-click="create(request)" type="submit">SUBMIT</button></p>
+        </form>
+    </div>
+</div>
+<!--     END OF ENLISTING BUSINESSES     -->
+
+<!--     END OF FEEDBACK CONTAINER     -->  
+    
+<div class="footer-contact" id="contacts">
+    <div class="footer-content">
+        <h1>You can reach us Here</h1>
+        <div class="pull-left">
+            <p>Unit 3 Open TBI, DOST-ASTI</p>
+            <p>C.P. Carcia Avenue,</p>
+            <p>Diliman Quezon City,</p>
+            <p>1101, Philippines</p>
+            
+        </div>
+        <div class="pull-right">
+            <p>Karlos Naidas</p>
+            <p>CEO</p>
+            <p>+63 917-7198-865</p>
+            <p><a href="#">hello@dilimanlabs.com</a></p>
+            <p> 
+                <ul class="social-links">
+                    <li><a href="#facebook" class="facebook" alt="facebook">    </a></li>
+                    <li><a href="#instagram" class="instagram" alt="instagram">   </a></li>
+                    <li><a href="#linkedIn" class="linkedin" alt="Linked In">    </a></li>
+                    <li><a href="#Twitter" class="twitter" alt="Twitter">     </a></li>
+                    <li><a href="#Youtube" class="youtube" alt="Youtube">     </a></li>
+                    <li><a href="#Tumblr" class="tumblr" alt="Tumblr">      </a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+    
+    <footer class="footer">
+        <p>&copy;COPYRIGHT 2014 <a href="#">PITSTOP</a></h6> ALL RIGHTS RESERVED  |  DILIMAN LABS</p>
+    </footer>
+
+    <script>
+    angular.module('adminApp', [])
+      .controller('BusinessPageFormController', ['$scope', '$window', '$http', function($scope, $window, $http) {
+
+        $scope.create = function(obj) {
+          var headers = {'Content-Type': 'application/json'};
+          $http({method: 'POST', url: 'http://pitstop.dilimanlabs.com/forms/businesspage.create',
+            'headers': headers, 'data': JSON.stringify(obj)}).
+            success(function(data, status, headers, config) {
+              $window.alert('New Business created.')
+            }).
+            error(function(data, status, headers, config) {
+              $window.alert('Error\n' + JSON.stringify(data))
+            });
+        }
+      }])
+      </script>
+
+</body>
+</html>

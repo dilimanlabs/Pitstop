@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+    <title>Pitstop</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56271592-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body ng-app="adminApp">
+<header>
+    <nav id="nav">
+       <p><a href="http://usepitstop.com/"><img src="pitstop_logo.svg" alt=""><h1>PITSTOP</h1></a></p>
+        <ul>
+            <li><a data-scroll href="#contacts">CONTACT</a></li>
+            <li><a data-scroll href="#advertise">ADVERTISE</a></li>
+            <li><a data-scroll href="#partners">PARTNERS</a></li>
+            <li><a href="http://usepitstop.blogspot.com/" target="_blank">BLOG</a></li>
+            <li><a data-scroll href="#features" class="active">FEATURES</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <div class="banner">
+       <div class="banner-items">
+            <div class="banner-description">
+                <h1>KNOW. NAVIGATE. DRIVE.</h1>
+                <p>Get an easy access to different automotive products and services using one App.</p>
+                <p>
+                    <a data-scroll href="#download"><input type="button" value="DOWNLOAD APP"></a>
+                    <a data-scroll href="#features"><button>LEARN MORE</button></a>
+                </p>
+            </div>
+            <div class="slider">
+                <ul id="carousel_ul">
+                    <li>
+                       <h2>Pitstop Application</h2>
+                        <img src="ss1.png" alt="" width="261"  height="438">
+                    </li>
+                    <li>
+                       <h2>Petron</h2>
+                        <img src="ss2.png" alt="" width="261" height="438">
+                    </li>
+                    <li>
+                       <h2>Motolite</h2>
+                        <img src="ss3.png" alt="" width="261" height="438">
+                    </li>
+                    <li>
+                       <h2>Rapide</h2>
+                        <img src="ss4.png" alt="" width="261" height="438">
+                    </li>
+                    <li>
+                       <h2>Yokohama</h2>
+                        <img src="ss5.png" alt="" width="261" height="438">
+                    </li>
+                    <input type="hidden" id="hidden_auto_slide_seconds" value="0"/>
+                    <div class="left_scroll"><a href='javascript:slide("left");'><</a></div>
+                    <div class="right_scroll"><a href='javascript:slide("right");'>></a></div>
+                </ul>
+            </div>
+          
+        </div>
+    </div>
+    <!-- FEATURETTE -->
+    <div class="featurette" id="features">
+       
+        <div class="features-title">
+            <h1>Why use <span><a href="#pitStop">PITSTOP</a></span></h1>
+            <p>Pitstop provides you information about your local automotivebrands.</p>
+        </div>
+        
+       <div class="featurette-centering">
+        
+        <div class="featurette-item">
+            <div class="icon-1"></div>
+            <div class="featurette-description">
+                <h1>Stay Updated</h1>
+                <p>Be the first to know new products, promos and locations of your favorite brands.</p>
+            </div>
+        </div>
+        
+        <div class="featurette-item">
+            <div class="icon-2"></div>
+            <div class="featurette-description">
+                <h1>Plan Ahead</h1>
+                <p>Plan your road trips ahead of time so you'll be at ease on the road</p>
+            </div>
+        </div>
+        
+        <div class="featurette-item">
+            <div class="icon-3"></div>
+            <div class="featurette-description">
+                <h1>Be Informed</h1>
+                <p>Know what brands offer. Browse through product line ups to find what's best for your car.</p>
+            </div>
+        </div>
+        
+        <div class="featurette-item">
+            <div class="icon-4"></div>
+            <div class="featurette-description">
+                <h1>Need A Break?</h1>
+                <p>Looking for ATMs, restrooms, and your favorite drive-thrus and restaurants? We've got you covered!</p>
+            </div>
+        </div>
+        
+       </div> 
+    </div>
+
+
+    <!-- SCREENSHOTS -->
+    <div class="screenshots">
+        <div class="screenshots-item">
+            <img src="banner-ss1.png" width="150" alt="">
+            <img src="banner-ss2.png" width="150" alt="">
+            <img src="banner-ss3.png" width="150" alt="">
+            <img src="banner-ss4.png" width="150" alt="">
+            <img src="banner-ss5.png" width="150" alt="">
+        </div>
+    </div>
+    
+    
+    <!-- MOBILE & TABLET -->
+    <div class="mobile-tablet" id="download">
+       <div class="mt-centering">
+           <img src="banner-tp.png" alt="">
+            <div class="mobile-tablet-description">
+                <h1>DOWNLOAD <span>PITSTOP</span></h1>
+                <p>
+                <span>Pitstop</span>
+                is a car service app that shows the location of car
+                shops & gas stations, the services they offer and more.
+                </p>
+                <p>Powered by <span>Google Maps</span>, it accurately maps the locations
+                of car service shops and gas stations within Metro Manila.
+                With just a tap, details of the shop's services can be
+                viewed, even when offline.</p>
+                <p>Useful in a car emergency, you can call and get help from
+                nearby shops during tough times.</p>
+                <p>With <span>Pitstop</span>, customers also get up-to-date with the latest
+                news, promos from partner brands.</p>
+                <p>It's probably the only car service app you'll ever need.</p>
+                <p>
+                <a href="https://play.google.com/store/apps/details?id=com.dilimanlabs.pitstop"><img src="google_play.svg" alt="" class="googleplay"></a>
+                <a href="#stores" ><img src="app_store.svg"  alt="" class="appstore"></a>
+                </p>
+            </div>
+        </div>
+    </div>
+   <!-- <div class="up-centering"><a data-scroll href="#nav"><p class="go-up">^</p></a></div> --> 
+    
+    
+    
+    
+    <!--     ENLISTING BUSINESS     -->
+    <div class="enlist-business" id="advertise">
+        <div class="enlist-description">
+            <h1>WE ARE GOING TO PUT YOU</h1>
+            <h2>IN THE MAP</h2>
+            <p>Join our Growing</p>
+            <p>Community in Pitstop</p>
+            <a href="business"><input type="button" value="Advertise for Free"></a>
+        </div>
+    </div>
+    
+    <!-- PARTNERS -->
+    <div class="partners" id="partners">
+       <h1>Meet our Friends</h1>
+        <div class="partners-item">
+            <a href="http://www.petron.com/web/" target="_blank">    <p class="petron"></p></a>
+                <a href="http://www.motolite.com/" target="_blank">  <p class="motolite"></p></a>
+                <a href="http://www.officebusters.net/rapide/wp/" target="_blank">    <p class="rapide"></p></a>
+                <a href="http://www.yokohamatire.ph/home/" target="_blank">           <p class="yokohama"></p></a>
+        </div>
+    </div>
+    
+    <!-- FEEDBACK CONTAINER -->
+    <div class="feedback-container">
+        <div class="feedback">
+           <h1>Your Thoughts?</h1>
+            <div class="feedback-content">
+                <form ng-controller="FeedbackPageFormController">  
+                <p>
+                    <input type="text" placeholder="* FULL NAME :" class="fullname" id="fname" name="" ng-model="request.feedbackpageform.fullName">
+                    <input type="text" placeholder="* EMAIL ADDRESS :" class="emailadd" id="eadd"  name="emailAddress"  ng-model="request.feedbackpageform.emailAddress">
+                </p>
+                <p>
+                    <input type="text" placeholder="* COMPANY NAME :" class="companyname" id="cname" name="businessName" ng-model="request.feedbackpageform.businessName">
+                    <input type="text" placeholder="* PHONE NUMBER :" class="phonenumber" id="pnumber" name="phoneNumber" ng-model="request.feedbackpageform.phoneNumber">
+                </p>
+                <p>
+                    <textarea class="message" placeholder="* YOUR MESSAGE :" id="feedback" name="comments" ng-model="request.feedbackpageform.comments"></textarea>
+                </p>
+                <p><button class="btnFeedback" ng-click="create(request)" type="submit">SUBMIT</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-container">
+    <div class="footer">
+        <div class="footer-content" id="contacts" >
+           <h1>You can reach us Here</h1>
+            <div class="pull-left">
+                <p>Unit 3 Open TBI, DOST-ASTI</p>
+                <p>C.P Garcia Avenue,</p>
+                <p>Diliman Quezon City,</p>
+                <p>1101, Philippines</p> 
+            </div>
+            <div class="pull-right">
+                <p>Karlos Naidas</p>
+                <p>CEO</p>
+                <p><abbr title="mobile">Mobile: </abbr>+63 917-7198-865</p>
+                <p><a href="mailto:#">info@dilimanlabs.com</a></p>
+                <ul class="social-links">
+                    <li><a href="#facebook" class="facebook" alt="facebook">    </a></li>
+                    <li><a href="#instagram" class="instagram" alt="instagram">   </a></li>
+                    <li><a href="#linkedIn" class="linkedin" alt="Linked In">    </a></li>
+                    <li><a href="#Twitter" class="twitter" alt="Twitter">     </a></li>
+                    <li><a href="#Youtube" class="youtube" alt="Youtube">     </a></li>
+                    <li><a href="#Tumblr" class="tumblr" alt="Tumblr">      </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p>&copy;COPYRIGHT 2014 <a href="#nav">PITSTOP</a> ALL RIGHTS RESERVED | DILIMAN LABS </p>
+</footer>
+
+</div>
+<script src="jquery.js"></script>
+<script src="smooth-scroll.js"></script>
+<script>
+    smoothScroll.init();
+</script>
+<script type="text/javascript">
+      $(document).ready(function() {
+            //options( 1 - ON , 0 - OFF)
+            var auto_slide = 1;
+            var hover_pause = 1;
+            var key_slide = 1;
+            //speed of auto slide(
+            var auto_slide_seconds = 3000;
+            /* IMPORTANT: i know the variable is called ...seconds but it's 
+            in milliseconds ( multiplied with 1000) '*/
+            /*move he last list item before the first item. The purpose of this is 
+            if the user clicks to slide left he will be able to see the last item.*/
+            $('#carousel_ul li:first').before($('#carousel_ul li:last')); 
+            //check if auto sliding is enabled
+            if(auto_slide == 1){
+                /*set the interval (loop) to call function slide with option 'right' 
+                and set the interval time to the variable we declared previously */
+                var timer = setInterval('slide("right")', auto_slide_seconds); 
+                /*and change the value of our hidden field that hold info about
+                the interval, setting it to the number of milliseconds we declared previously*/
+                $('#hidden_auto_slide_seconds').val(auto_slide_seconds);
+            }
+            //check if hover pause is enabled
+            if(hover_pause == 1){
+                //when hovered over the list 
+                $('#carousel_ul').hover(function(){
+                    //stop the interval
+                    clearInterval(timer)
+                },function(){
+                    //and when mouseout start it again
+                    timer = setInterval('slide("right")', auto_slide_seconds); 
+                });
+            }
+            //check if key sliding is enabled
+            if(key_slide == 1){
+                //binding keypress function
+                $(document).bind('keypress', function(e) {
+                    //keyCode for left arrow is 37 and for right it's 39 '
+                    if(e.keyCode==37){
+                            //initialize the slide to left function
+                            slide('left');
+                    }else if(e.keyCode==39){
+                            //initialize the slide to right function
+                            slide('right');
+                    }
+                });
+            }
+      });
+    //FUNCTIONS BELLOW
+    //slide function  
+    function slide(where){
+                //get the item width
+                var item_width = $('#carousel_ul li').outerWidth() + 10;
+                /* using a if statement and the where variable check 
+                we will check where the user wants to slide (left or right)*/
+                if(where == 'left'){
+                    //...calculating the new left indent of the unordered list (ul) for left sliding
+                    var left_indent = parseInt($('#carousel_ul').css('left')) + item_width;
+                }else{
+                    //...calculating the new left indent of the unordered list (ul) for right sliding
+                    var left_indent = parseInt($('#carousel_ul').css('left')) - item_width;
+                }
+                //make the sliding effect using jQuery's animate function... '
+                $('#carousel_ul:not(:animated)').animate({'left' : left_indent},500,function(){    
+
+                    /* when the animation finishes use the if statement again, and make an ilussion
+                    of infinity by changing place of last or first item*/
+                    if(where == 'left'){
+                        //...and if it slided to left we put the last item before the first item
+                        $('#carousel_ul li:first').before($('#carousel_ul li:last'));
+                    }else{
+                        //...and if it slided to right we put the first item after the last item
+                        $('#carousel_ul li:last').after($('#carousel_ul li:first')); 
+                    }
+
+                    //...and then just get back the default left indent
+                    $('#carousel_ul').css({'left' : '-281px'});
+                });            
+    }
+    </script>
+<script>
+    angular.module('adminApp', [])
+      .controller('FeedbackPageFormController', ['$scope', '$window', '$http', function($scope, $window, $http) {
+        $scope.create = function(obj) {
+          var headers = {'Content-Type': 'application/json'};
+          $http({method: 'POST', url: 'http://usepitstop.com/forms/feedbackpage.create',
+            'headers': headers, 'data': JSON.stringify(obj)}).
+            success(function(data, status, headers, config) {
+              $window.alert('New Feedback created.')
+            }).
+            error(function(data, status, headers, config) {
+              $window.alert('Error\n' + JSON.stringify(data))
+            });
+        }
+      }])
+</script>
+
+</body>
+</html>

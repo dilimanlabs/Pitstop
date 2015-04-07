@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>
+Pitstop-DilimanLabs
+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="media.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js" ></script>
+<script src="feedback.js" type="text/javascript"></script>
+</head>
+<body ng-app="adminApp">
+<header class="fixed-header">
+        <nav class="navbar">
+           <a href="#" id="menu-icon"></a>
+            <ul class="nav-list">
+                <li><a href="#">FEATURES</a></li>
+                <li><a href="#partners">PARTNERS</a></li>
+                <li><a href="#contacts">CONTACT</a></li>
+                <li><a href="#business">ENLIST</a></li>
+            </ul>
+            <a href="#"><img src="pitstop_logo.svg"></a>
+            <div class="overflow">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+</header>
+<div class="container">
+    <div class="banner">
+            <div class="imgBanner"></div>
+            <div class="pitstopLogo"></div>
+            <div class="description">
+                <h1>PITSTOP</h1>
+                <h5 class="know">KNOW . NAVIGATE . DRIVE</h5>
+                <h6>A car service app in one tap</h6>
+                <a href="#GooglePlay"><img src="google_play.svg"></a>
+                <a href="#AppStore"><img src="app_store.svg"></a>
+            </div> 
+    </div>
+</div>
+   <!-- 
+<div class="content-container">
+    <div class="content">
+        <p>PITSTOP PROVIDES YOU INFORMATION ABOUT YOUR</p>
+        <p>LOCAL AUTOMOTIVE BRANDS,</p>
+        <p>A CAR SERVICE APP IN JUST ONLY ONE TAP</p>
+    </div>
+</div>
+-->
+<div class="container-features">
+   <!-- <div class="features">
+        <ul class="features-logo">
+            <li><a href="#stayUpdated" class="stayupdated"><img src="assets/icons/stayupdated.png"></a></li>
+            <li><a href="#planAhead" class="planahead"><img src="assets/icons/planahead.png"></a></li>
+            <li><a href="#beInformed" class="beinformed"><img src="assets/icons/beinformed.png"></a></li>
+            <li><a href="#NeedABreak" class="needabreak"><img src="assets/icons/needabreak.png"></a></li>
+        </ul>
+    </div> -->
+    <div class="features-items">
+        <div class="features-description" id="features-active">
+            <h1>Keeping you Updated</h1>
+            <p>Know what’s up and what’s new with your favorite automotive brands and shops with just a tap on your mobile device.</p> 
+        </div>
+        <img src="mobile-slider.png" width="317" height="627">
+    </div>
+</div>
+
+
+ <!--     BUSINESS AND PARTNERS     --> 
+<div class="business-container">
+   <div class="partners" id="partners">
+       <p>Meet Our Friends</p>
+        <div class="partners-logo">
+           <a href="#petron"><p class="petron"></p></a>
+           <a href="#motolite"><p class="motolite"></p></a>
+            <a href="#rapide"><p class="rapide"></p></a>
+            <a href="#yokohama"><p class="yokohama"></p></a>
+        </div>
+       
+   </div>
+   <div class="enlist-business" id="business">
+        <h1>WE ARE GOING TO PUT YOU</h1>
+        <h1>IN THE MAP</h1>
+        <p>Join our Growing</p>
+        <p>Community in Pitstop</p>
+        <a href="business"><input type="button" value="ENLIST BUSINESS"></a>
+   </div>  
+</div>
+
+ <!--     END OF BUSINESS AND PARTNERS     -->       
+    
+    
+<!--     FEEDBACK CONTAINER     -->   
+ 
+<div class="feedback-container">
+    <div class="feedback-content">
+        <p>Your Thoughts?</p>
+        <form ng-controller="FeedbackPageFormController">  
+        <p>
+            <input type="text" placeholder="* FULL NAME :" class="fullname" id="fname" name="" ng-model="request.feedbackpageform.fullName">
+            <input type="text" placeholder="* EMAIL ADDRESS :" class="emailadd" id="eadd"  name="emailAddress"  ng-model="request.feedbackpageform.emailAddress">
+        </p>
+        <p>
+            <input type="text" placeholder="* COMPANY NAME :" class="companyname" id="cname" name="businessName" ng-model="request.feedbackpageform.businessName">
+            <input type="text" placeholder="* PHONE NUMBER :" class="phonenumber" id="pnumber" name="phoneNumber" ng-model="request.feedbackpageform.phoneNumber">
+        </p>
+        <p>
+            <textarea class="message" placeholder="* YOUR MESSAGE :" id="feedback" name="comments" ng-model="request.feedbackpageform.comments"></textarea>
+        </p>
+        <p><button class="btnFeedback" ng-click="create(request)" type="submit">SUBMIT</button></p>
+      </form>
+    </div>
+</div>
+
+<!--     END OF FEEDBACK CONTAINER     -->  
+    
+<div class="footer-contact" id="contacts">
+    <div class="footer-content">
+        <h1>You can reach us Here</h1>
+        <div class="pull-left">
+            <p>Unit 3 Open TBI, DOST-ASTI</p>
+            <p>C.P. Carcia Avenue,</p>
+            <p>Diliman Quezon City,</p>
+            <p>1101, Philippines</p>
+            
+        </div>
+        <div class="pull-right">
+            <p>Karlos Naidas</p>
+            <p>CEO</p>
+            <p>+63 917-7198-865</p>
+            <p><a href="#">hello@dilimanlabs.com</a></p>
+            <p> 
+                <ul class="social-links">
+                    <li><a href="#facebook" class="facebook" alt="facebook">    </a></li>
+                    <li><a href="#instagram" class="instagram" alt="instagram">   </a></li>
+                    <li><a href="#linkedIn" class="linkedin" alt="Linked In">    </a></li>
+                    <li><a href="#Twitter" class="twitter" alt="Twitter">     </a></li>
+                    <li><a href="#Youtube" class="youtube" alt="Youtube">     </a></li>
+                    <li><a href="#Tumblr" class="tumblr" alt="Tumblr">      </a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+    
+    <footer class="footer">
+        <p>&copy;COPYRIGHT 2014 <a href="#">PITSTOP</a></h6> ALL RIGHTS RESERVED  |  DILIMAN LABS</p>
+    </footer>
+    <script>
+    angular.module('adminApp', [])
+      .controller('FeedbackPageFormController', ['$scope', '$window', '$http', function($scope, $window, $http) {
+
+        $scope.create = function(obj) {
+          var headers = {'Content-Type': 'application/json'};
+          $http({method: 'POST', url: 'http://pitstop.dilimanlabs.com/forms/feedbackpage.create',
+            'headers': headers, 'data': JSON.stringify(obj)}).
+            success(function(data, status, headers, config) {
+              $window.alert('New Feedback created.')
+            }).
+            error(function(data, status, headers, config) {
+              $window.alert('Error\n' + JSON.stringify(data))
+            });
+        }
+      }])
+      </script>
+</body>
+
+</html>

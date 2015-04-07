@@ -1,0 +1,8 @@
+<div class="page">
+	<a href="{{currentPage.url}}"><img src="{{currentPage.imageUrl}}" width="80" alt="{{ currentPage.description }}"></a>
+	<p>{{ currentPage.description }}</p>
+	<h3 ng-if="currentPage.products.length > 0">Products</h3>
+	<ul class="products" ng-if="currentPage.products.length > 0">
+		<li ng-repeat="product in currentPage.products" ng-class="{available: product.available}"><a href="{{ product.url }}">Product</a></li>
+	</ul>
+</div>

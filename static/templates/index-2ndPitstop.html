@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Pitstop</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="media.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js" ></script>
+	<script src="bind-polyfill.js"></script>
+    <script src="smooth-scroll.js"></script>
+	<script>
+        smoothScroll.init();
+    </script>
+</head>
+<body data-scroll id="body" ng-app="adminApp">
+<header>
+    <nav>
+        <a href="#" data-scroll id="menu-icon"></a>
+        <ul>
+            <li><a data-scroll href="#features">FEATURES</a></li>
+            <li><a data-scroll href="#partners">PARTNERS</a></li>
+            <li><a data-scroll href="#contacts">CONTACT</a></li>
+            <li><a data-scroll href="#business-page">ENLIST</a></li>
+            <a data-scroll href="#body"><img src="pitstop_logo.svg" alt="pitstop"></a>
+        </ul>
+    <div class="overflow">
+           <div class="bar"></div>
+           <div class="bar"></div>
+           <div class="bar"></div>
+    </div>
+    </nav>
+</header>
+<div class="container" data-scroll >
+    <div class="page1-container" >
+        <div class="page1-wrapper">
+            <div class="page1-description">
+                <h1>PITSTOP</h1>
+                <p>KNOW . DRIVE . NAVIGATE</p>
+                <p>A car service app in one tap.</p>
+                <a href="#playStore"><img src="google_play.svg"></a>
+                <a href="#appStore" class="appstore"><img src="app_store.svg" ></a>
+            </div>
+            <div class="banner"></div>
+        </div>
+    </div> <!--     PAGE 1 END     -->
+    
+    <div class="page2-container" id="features" >
+        <p class="title-page2">Pitstop provides you information about your local automotive brands.</p>
+        <div class="centering">
+        <div class="featurette effect" >
+            <div class="featurette-item">
+                <div class="icon1"></div>
+                <div class="featurette-description">
+                    <h1>Stay Updated</h1>
+                    <p>Be the first to know new products, promos and locations of your favorite brands.</p>
+                </div>
+            </div>
+            <div class="featurette-item">
+                <div class="icon2"></div>
+                <div class="featurette-description">
+                    <h1>Plan Ahead</h1>
+                    <p>Plan your road trips ahead of time so you'll be at ease on the road.</p>
+                    
+                </div>
+            </div>
+            <div class="featurette-item">
+                <div class="icon3"></div>
+                <div class="featurette-description">
+                    <h1>Be Informed</h1>
+                    <p>Know what brands offer. Browse through product line ups to find what’s best for your car.</p>
+                </div>
+            </div>
+            <div class="featurette-item">
+                <div class="icon4"></div>
+                <div class="featurette-description">
+                    <h1>Need A Break?</h1>
+                    <p>Looking for ATMs, restrooms, and your favorite drive-thrus and restaurants? We've got you covered!</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div><!--     PAGE 2 END     -->
+    
+<div class="page3-container" id="partners">
+    <div class="partners-container">
+        <div class="partners" data-scroll  >
+           <h1>Meet Our Friends</h1>
+            <div class="partners-item">
+                <a href="http://www.petron.com/web/" target="_blank"><p class="petron"></p></a>
+                <a href="http://www.motolite.com/" target="_blank"><p class="motolite"></p></a>
+                <a href="http://www.officebusters.net/rapide/wp/" target="_blank"><p class="rapide"></p></a>
+                <a href="http://www.yokohamatire.ph/home/" target="_blank"><p class="yokohama"></p></a>
+            </div>
+        </div>
+    </div>
+    <div class="enlist-business" data-scroll id="business-page" >
+       <div class="enlist-description">
+           <h1>WE ARE GOING TO PUT YOU</h1>
+           <h1>IN THE MAP</h1>
+           <p>Join our Growing</p>
+           <p>Community in Pitstop</p>
+           <p><a href="business"><input type="button" value="Enlist for FREE"></a></p>
+       </div> 
+    </div>
+</div>
+               
+<div class="page4-container">
+    <div class="feedback">
+       <h1>Your Thoughts?</h1>
+        <div class="feedback-content">
+            <form ng-controller="FeedbackPageFormController">  
+            <p>
+                <input type="text" placeholder="* FULL NAME :" class="fullname" id="fname" name="" ng-model="request.feedbackpageform.fullName">
+                <input type="text" placeholder="* EMAIL ADDRESS :" class="emailadd" id="eadd"  name="emailAddress"  ng-model="request.feedbackpageform.emailAddress">
+            </p>
+            <p>
+                <input type="text" placeholder="* COMPANY NAME :" class="companyname" id="cname" name="businessName" ng-model="request.feedbackpageform.businessName">
+                <input type="text" placeholder="* PHONE NUMBER :" class="phonenumber" id="pnumber" name="phoneNumber" ng-model="request.feedbackpageform.phoneNumber">
+            </p>
+            <p>
+                <textarea class="message" placeholder="* YOUR MESSAGE :" id="feedback" name="comments" ng-model="request.feedbackpageform.comments"></textarea>
+            </p>
+            <p><button class="btnFeedback" ng-click="create(request)" type="submit">SUBMIT</button></p>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="page5-container">
+    <div class="footer">
+        <div class="footer-content" data-scroll id="contacts" >
+           <h1>You can reach us Here</h1>
+            <div class="pull-left">
+                <p>Unit 3 Open TBI, DOST-ASTI</p>
+                <p>C.P Garcia Avenue,</p>
+                <p>Diliman Quezon City,</p>
+                <p>1101, Philippines</p> 
+            </div>
+            <div class="pull-right">
+                <p>Karlos Naidas</p>
+                <p>CEO</p>
+                <p><abbr title="mobile">Mobile: </abbr>+63 917-7198-865</p>
+                <p><a href="mailto:#">info@dilimanlabs.com</a></p>
+                <p> 
+                <ul class="social-links">
+                    <li><a href="#facebook" class="facebook" alt="facebook">    </a></li>
+                    <li><a href="#instagram" class="instagram" alt="instagram">   </a></li>
+                    <li><a href="#linkedIn" class="linkedin" alt="Linked In">    </a></li>
+                    <li><a href="#Twitter" class="twitter" alt="Twitter">     </a></li>
+                    <li><a href="#Youtube" class="youtube" alt="Youtube">     </a></li>
+                    <li><a href="#Tumblr" class="tumblr" alt="Tumblr">      </a></li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+ <footer>
+    <p>&copy;<a href="http://pitstop.dilimanlabs.com/">PITSTOP</a> 2014  All Rights Reserved | Diliman Labs </p>
+</footer>                       
+</div><!--     CONTAINER     -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-55963468-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+    angular.module('adminApp', [])
+      .controller('FeedbackPageFormController', ['$scope', '$window', '$http', function($scope, $window, $http) {
+
+        $scope.create = function(obj) {
+          var headers = {'Content-Type': 'application/json'};
+          $http({method: 'POST', url: 'http://pitstop.dilimanlabs.com/forms/feedbackpage.create',
+            'headers': headers, 'data': JSON.stringify(obj)}).
+            success(function(data, status, headers, config) {
+              $window.alert('New Feedback created.')
+            }).
+            error(function(data, status, headers, config) {
+              $window.alert('Error\n' + JSON.stringify(data))
+            });
+        }
+      }])
+      </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<div class="estab-details">
+    <h2>{{ cardModel.details.name }}</h2>
+    <p class="estab-address">{{ cardModel.details.address }}</p>
+    <p class="estab-contact">{{ cardModel.details.contact }}</p>
+    <button class="page-link" ng-repeat="pageTitle in pageTitles" ng-click="$parent.currentPage = $parent.cardModel.pages[$index]">{{ pageTitle }}</button>
+</div>
+<card-page ng-if="cardModel.pages.length > 0"></card-page>
