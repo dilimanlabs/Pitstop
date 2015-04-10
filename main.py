@@ -63,6 +63,8 @@ app = webapp2.WSGIApplication([
     ('/business', BusinessHandler),
     ('/map.*', MapHandler),
 
+    (r'^.*/api/establishment/search/?$', establishment.SearchHandler),
+
     (r'^.*/api/check_id/?$', account.CheckIDHandler),
     (r'^.*/api/check_password/?$', account.CheckPasswordHandler),
     (r'^.*/api/check_name/?$', account.CheckNameHandler),
