@@ -1,9 +1,10 @@
 from datetime import datetime
 
+from google.appengine.api import search
 from google.appengine.ext import ndb
 from google.net.proto.ProtocolBuffer import ProtocolBufferDecodeError
 
-from utils import account_utils, session_utils, urlhash
+from utils import account_utils, session_utils, urlhash, text_utils
 from utils.country_utils import CountryCodeList, CountryList
 
 
@@ -42,6 +43,27 @@ class Business(ndb.Model):
     primaryImage = ndb.KeyProperty(kind=Image, indexed=False, required=False)
     registeredName = ndb.StringProperty(indexed=True, required=True)  # unique
     url = ndb.StringProperty(indexed=True, required=False)  # unique
+
+    def _post_put_hook(self, future):
+        if (self.url):
+            name = ','.join(text_utils.tokenize_autocomplete(self.name))
+            registeredName = ','.join(text_utils.tokenize_autocomplete(self.registeredName))
+            fields = [
+                search.TextField(name="name", value=name),
+                search.TextField(name="registeredName", value=registeredName)
+            ]
+
+            d = search.Document(doc_id=self.url, fields=fields)
+
+            try:
+                add_result = search.Index(name="Businesses_Index").put(d)
+            except search.Error:
+                pass
+
+    @classmethod
+    def _post_delete_hook(cls, key, future):
+        model = key.get()
+        search.Index(name="Businesses_Index").delete(model.url)
 
     @classmethod
     def fetch_by_registeredName(cls, registeredName):
@@ -195,6 +217,27 @@ class Establishment(ndb.Model):
     name = ndb.StringProperty(indexed=True, required=True)  # unique for parent
     primaryImage = ndb.KeyProperty(kind=Image, indexed=False, required=False)
     url = ndb.StringProperty(indexed=True, required=False)  # unique for parent
+
+    def _post_put_hook(self, future):
+        if (self.url):
+            name = ','.join(text_utils.tokenize_autocomplete(self.name))
+            address = ','.join(text_utils.tokenize_autocomplete(self.location.address))
+            fields = [
+                search.TextField(name="name", value=name),
+                search.TextField(name="address", value=address)
+            ]
+
+            d = search.Document(doc_id=self.url, fields=fields)
+
+            try:
+                search.Index(name="Establishments_Index").put(d)
+            except search.Error:
+                pass
+
+    @classmethod
+    def _post_delete_hook(cls, key, future):
+        model = key.get()
+        search.Index(name="Establishments_Index").delete(model.url)
 
     @classmethod
     def fetch_by_name(cls, name, ancestor):
