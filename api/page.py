@@ -1,12 +1,8 @@
-import webapp2
-from handlers.handler import Handler
-import json
-
 from google.appengine.ext import ndb
-from models import models
-from utils import urlhash
 
 from handlers import basehandler
+from models import models
+
 
 class BusinessItemPageCollectionHandler(basehandler.BaseHandler):
 
