@@ -1,6 +1,7 @@
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 from webapp2_extras import auth
+from webapp2_extras.appengine.auth.models import UserToken
 from webapp2_extras.auth import InvalidAuthIdError, InvalidPasswordError
 
 from handlers import basehandler
@@ -215,8 +216,15 @@ class AccountItemHandler(basehandler.BaseHandler):
     @basehandler.user_required
     def get(self, *ar, **kw):
         auth = self.auth
-        user = auth.get_user_by_session()
-        self.set_response('200', data={"message": "You are logged in as " + ndb.Key(models.User, user['user_id']).get().auth_ids[0]})
+        data = auth.get_session_data()
+        user_token = models.User.token_model.get_key(data['user_id'], 'auth', data['token']).get()
+
+        if user_token:
+            user = self.user
+            self.set_response('200', data={"message": "You are logged in as " + user.auth_ids[0]})
+        else:
+            self.abort(401)
+
 
 class AccountItemImageCollectionHandler(basehandler.BaseHandler):
     def post(self, *ar, **kw):

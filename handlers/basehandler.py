@@ -66,7 +66,10 @@ def user_required(func):
     @wraps(func)
     def check_login(self, *ar, **kw):
         auth = self.auth
-        if not auth.get_user_by_session():
+        data = auth.get_session_data()
+        user_token = models.User.token_model.get_key(data['user_id'], 'auth', data['token']).get()
+
+        if not user_token:
             self.abort(401)
         else:
             return func(self, *ar, **kw)
