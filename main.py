@@ -25,7 +25,7 @@ config = {
         'user_attributes': []
     },
     'webapp2_extras.sessions': {
-        'secret_key': 'YOUR_SECRET_KEY'
+        'secret_key': 'Tanya Patricia Tiongson Allas'
     }
 }
 

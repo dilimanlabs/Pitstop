@@ -18,8 +18,7 @@ from utils import urlhash
 from models import models
 from functools import wraps
 
-from webapp2_extras import auth
-from webapp2_extras import sessions
+from webapp2_extras import auth, sessions
 
 
 def create(func):
@@ -60,16 +59,11 @@ def get_list(func):
 
 def user_required(func):
     """
-        Decorator that checks if there's a user associated with the current session.
-        Will also fail if there's no session present.
+        Requires that a user be logged in to access the resource
     """
     @wraps(func)
     def check_login(self, *ar, **kw):
-        auth = self.auth
-        data = auth.get_session_data()
-        user_token = models.User.token_model.get_key(data['user_id'], 'auth', data['token']).get()
-
-        if not user_token:
+        if not self.user:
             self.abort(401)
         else:
             return func(self, *ar, **kw)
@@ -97,65 +91,40 @@ class BaseHandler(webapp2.RequestHandler):
 
 
     @webapp2.cached_property
-    def auth(self):
-        """Shortcut to access the auth instance as a property."""
-        return auth.get_auth()
-
-
-    @webapp2.cached_property
-    def user_info(self):
-        """
-            Shortcut to access a subset of the user attributes that are stored
-            in the session.
-            The list of attributes to store in the session is specified in
-            config['webapp2_extras.auth']['user_attributes'].
-            :returns
-                A dictionary with most user information
-        """
-        return self.auth.get_user_by_session()
-
-
-    @webapp2.cached_property
-    def user(self):
-        """
-            Shortcut to access the current logged in user.
-            Unlike user_info, it fetches information from the persistence layer and
-            returns an instance of the underlying model.
-            :returns
-                The instance of the user model associated to the logged in user.
-        """
-        u = self.user_info
-        return self.user_model.get_by_id(u['user_id']) if u else None
-
-
-    @webapp2.cached_property
-    def user_model(self):
-        """
-            Returns the implementation of the user model.
-            It is consistent with config['webapp2_extras.auth']['user_model'], if set.
-        """
-        return self.auth.store.user_model
+    def session_store(self):
+        return sessions.get_store(request=self.request)
 
 
     @webapp2.cached_property
     def session(self):
-        """
-            Shortcut to access the current session.
-        """
-        return self.session_store.get_session(backend="datastore")
+        return self.session_store.get_session(backend='datastore')
 
 
-    # this is needed for webapp2 sessions to work
     def dispatch(self):
-        # Get a session store for this request.
-        self.session_store = sessions.get_store(request=self.request)
-
         try:
-            # Dispatch the request.
-            webapp2.RequestHandler.dispatch(self)
+            super(BaseHandler, self).dispatch()
         finally:
-            # Save all sessions.
+            # Save the session after each request
             self.session_store.save_sessions(self.response)
+
+
+    @webapp2.cached_property
+    def auth(self):
+        return auth.get_auth(request=self.request)
+
+
+    @webapp2.cached_property
+    def user(self):
+        return self.auth.get_user_by_session()
+
+
+    @webapp2.cached_property
+    def user_model(self):
+        user_model, timestamp = self.auth.store.user_model.get_by_auth_token(
+                self.user['user_id'],
+                self.user['token']) if self.user else (None, None)
+
+        return user_model
 
 
     def get(self, *ar, **kw):

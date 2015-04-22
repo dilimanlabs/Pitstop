@@ -9,142 +9,6 @@ from models import models
 from utils import account_utils, urlhash
 
 
-class CheckIDHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'id': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'id'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        id = data['id']
-
-        error = account_utils.check_id(id)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class CheckPasswordHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'password': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'password'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        password = data['password']
-
-        error = account_utils.check_password(password)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class CheckNameHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'name': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'name'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        name = data['name']
-
-        error = account_utils.check_name(name)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class LoginHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'account': {
-                    'type': 'object',
-                    'properties': {
-                        'username' : {
-                            'type': 'string'
-                        },
-                        'password': {
-                            'type': 'string'
-                        }
-                    },
-                    'required' : [
-                        'username',
-                        'password'
-                    ],
-                    'additionalProperties': False
-                }
-            },
-            'required': [
-                'account'
-            ],
-            'additionalProperties': False
-        }
-
-        data = self.validate_body(schema)
-
-        username = str(data['account']['username'])
-        password = str(data['account']['password'])
-
-        try:
-            u = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
-            response_code = '200'
-        except (InvalidAuthIdError, InvalidPasswordError) as e:
-            #logging.info('Login failed for user %s because of %s', username, type(e))
-            response_code = '401'
-
-        self.set_response(response_code)
-
-
-class LogoutHandler(basehandler.BaseHandler):
-
-  def get(self):
-    self.auth.unset_session()
-    self.set_response('200', data={"message": "Logout successful."})
-
 class AccountCollectionHandler(basehandler.BaseHandler):
 
     def post(self):
@@ -184,31 +48,27 @@ class AccountCollectionHandler(basehandler.BaseHandler):
         email = str(data['account']['email'])
         password = str(data['account']['password'])
 
-        unique_properties = ['email_address']
-        user_data = self.user_model.create_user(username,
-            unique_properties,
+        success, info = self.user_model.create_user(username,
+            unique_properties=['email_address'],
             email_address=email, password_raw=password,
             verified=False)
 
-        if not user_data[0]: # user_data is a tuple
-            return
+        if success:
+            user_id = info.get_id()
+            token = self.user_model.create_signup_token(user_id)
 
-        user = user_data[1]
-        user_id = user.get_id()
-
-        token = self.user_model.create_signup_token(user_id)
-
-        sender_address = "<dilimanlabs@gmail.com>"
-        subject = "Account Verification"
-        body = """
+            sender_address = "<dilimanlabs@gmail.com>"
+            subject = "Account Verification"
+            body = """
             pitstop.dilimanlabs.com/accounts/%s/verify/%s/
             """ % (user_id, token)
 
-        mail.send_mail(sender_address, email, subject, body)
+            mail.send_mail(sender_address, email, subject, body)
 
-        response_code = '201 Created'
-
-        self.set_response(response_code)
+            response_code = '201 Created'
+            self.set_response(response_code)
+        else:
+            self.abort(401)
 
 
 class AccountItemHandler(basehandler.BaseHandler):
@@ -283,3 +143,54 @@ class SignUpVerificationHandler(basehandler.BaseHandler):
         # User email address has been verified.
 
         self.set_response('200 OK')
+
+
+class LoginHandler(basehandler.BaseHandler):
+
+    def post(self):
+        schema = {
+            'type': 'object',
+            'properties': {
+                'account': {
+                    'type': 'object',
+                    'properties': {
+                        'username' : {
+                            'type': 'string'
+                        },
+                        'password': {
+                            'type': 'string'
+                        }
+                    },
+                    'required' : [
+                        'username',
+                        'password'
+                    ],
+                    'additionalProperties': False
+                }
+            },
+            'required': [
+                'account'
+            ],
+            'additionalProperties': False
+        }
+
+        data = self.validate_body(schema)
+
+        username = str(data['account']['username'])
+        password = str(data['account']['password'])
+
+        try:
+            self.auth.get_user_by_password(username, password, remember=True, save_session=True)
+            response_code = '200'
+            self.set_response(response_code)
+        except (InvalidAuthIdError, InvalidPasswordError) as e:
+            #logging.info('Login failed for user %s because of %s', username, type(e))
+            self.abort(401)
+
+
+class LogoutHandler(basehandler.BaseHandler):
+
+    @basehandler.user_required
+    def get(self):
+        self.auth.unset_session()
+        self.set_response('200', data={"message": "Logout successful."})
