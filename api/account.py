@@ -1,145 +1,16 @@
-import json
-
+from google.appengine.api import mail
 from google.appengine.ext import ndb
+from webapp2_extras import auth
+from webapp2_extras.appengine.auth.models import UserToken
+from webapp2_extras.auth import InvalidAuthIdError, InvalidPasswordError
 
 from handlers import basehandler
 from models import models
-from utils import account_utils
-from utils import urlhash
-
-
-class CheckIDHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'id': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'id'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        id = data['id']
-
-        error = account_utils.check_id(id)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class CheckPasswordHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'password': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'password'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        password = data['password']
-
-        error = account_utils.check_password(password)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class CheckNameHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'name': {
-                    'type': 'string'
-                }
-            },
-            'required': [
-                'name'
-            ],
-            'additionalProperties':False
-            }
-
-        data = self.validate_body(schema)
-
-        name = data['name']
-
-        error = account_utils.check_name(name)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'error': error
-            }
-        })
-
-
-class LoginHandler(basehandler.BaseHandler):
-    def post(self):
-        schema = {
-            'type': 'object',
-            'properties': {
-                'account': {
-                    'type': 'object',
-                    'properties': {
-                        'id' : {
-                            'type': 'string'
-                        },
-                        'password': {
-                            'type': 'string'
-                        }
-                    },
-                    'required' : [
-                        'id',
-                        'password'
-                    ],
-                    'additionalProperties': False
-                }
-            },
-            'required': [
-                'account'
-            ],
-            'additionalProperties': False
-        }
-
-        data = self.validate_body(schema)
-
-        id = str(data['account']['id'])
-        password = str(data['account']['password'])
-
-        authToken, message = models.AccountId.authenticate(id=id, password=password)
-
-        self.set_response('200 OK', data={
-            'meta': self.get_meta(),
-            'response': {
-                'authToken': authToken,
-                'message': message
-            }
-        })
+from utils import account_utils, urlhash
 
 
 class AccountCollectionHandler(basehandler.BaseHandler):
+
     def post(self):
         schema = {
             'type': 'object',
@@ -147,10 +18,10 @@ class AccountCollectionHandler(basehandler.BaseHandler):
                 'account': {
                     'type': 'object',
                     'properties': {
-                        'id' : {
+                        'username' : {
                             'type': 'string'
                         },
-                        'name': {
+                        'email': {
                             'type': 'string'
                         },
                         'password': {
@@ -158,8 +29,8 @@ class AccountCollectionHandler(basehandler.BaseHandler):
                         }
                     },
                     'required': [
-                        'id',
-                        'name',
+                        'username',
+                        'email',
                         'password'
                     ],
                     'additionalProperties': False
@@ -173,30 +44,47 @@ class AccountCollectionHandler(basehandler.BaseHandler):
 
         data = self.validate_body(schema)
 
-        id = str(data['account']['id'])
-        name = str(data['account']['name'])
+        username = str(data['account']['username'])
+        email = str(data['account']['email'])
         password = str(data['account']['password'])
 
-        authToken = models.AccountId.create(id, name, password)
+        success, info = self.user_model.create_user(username,
+            unique_properties=['email_address'],
+            email_address=email, password_raw=password,
+            verified=False)
 
-        if authToken:
+        if success:
+            user_id = info.get_id()
+            token = self.user_model.create_signup_token(user_id)
+
+            sender_address = "<dilimanlabs@gmail.com>"
+            subject = "Account Verification"
+            body = """
+            pitstop.dilimanlabs.com/accounts/%s/verify/%s/
+            """ % (user_id, token)
+
+            mail.send_mail(sender_address, email, subject, body)
+
             response_code = '201 Created'
-            extra_headers = [['Location', '/account/' + id]]
+            self.set_response(response_code)
         else:
-            response_code = '200 OK'
-            extra_headers = None
-
-        self.set_response(response_code, extra_headers=extra_headers, data={
-            'meta': self.get_meta(),
-            'response': {
-                'authToken': authToken
-            }
-        })
+            self.abort(401)
 
 
 class AccountItemHandler(basehandler.BaseHandler):
-    def get(self):
-        pass
+
+    @basehandler.user_required
+    def get(self, *ar, **kw):
+        auth = self.auth
+        data = auth.get_session_data()
+        user_token = models.User.token_model.get_key(data['user_id'], 'auth', data['token']).get()
+
+        if user_token:
+            user = self.user
+            self.set_response('200', data={"message": "You are logged in as " + user.auth_ids[0]})
+        else:
+            self.abort(401)
+
 
 class AccountItemImageCollectionHandler(basehandler.BaseHandler):
     def post(self, *ar, **kw):
@@ -224,3 +112,85 @@ class AccountItemImageCollectionHandler(basehandler.BaseHandler):
         self.response.headers.add_header('Access-Control-Allow-Origin', '*')
         self.response.headers.add_header('Location', '/accnt/' + urlhash.int_to_base62(accountBody_obj.key.integer_id()) + '/img/' + img_id)
         self.response.status = '201 Created'
+
+
+class SignUpVerificationHandler(basehandler.BaseHandler):
+
+    def get(self, *ar, **kw):
+        user = None
+        user_id = ar[0]
+        signup_token = ar[1]
+
+        # it should be something more concise like
+        # self.auth.get_user_by_token(user_id, signup_token)
+        # unfortunately the auth interface does not (yet) allow to manipulate
+        # signup tokens concisely
+        user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
+
+        if not user:
+            self.abort(404)
+
+        # store user data in the session
+        self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+
+        # remove signup token, we don't want users to come back with an old link
+        self.user_model.delete_signup_token(user.get_id(), signup_token)
+
+        if not user.verified:
+            user.verified = True
+            user.put()
+
+        # User email address has been verified.
+
+        self.set_response('200 OK')
+
+
+class LoginHandler(basehandler.BaseHandler):
+
+    def post(self):
+        schema = {
+            'type': 'object',
+            'properties': {
+                'account': {
+                    'type': 'object',
+                    'properties': {
+                        'username' : {
+                            'type': 'string'
+                        },
+                        'password': {
+                            'type': 'string'
+                        }
+                    },
+                    'required' : [
+                        'username',
+                        'password'
+                    ],
+                    'additionalProperties': False
+                }
+            },
+            'required': [
+                'account'
+            ],
+            'additionalProperties': False
+        }
+
+        data = self.validate_body(schema)
+
+        username = str(data['account']['username'])
+        password = str(data['account']['password'])
+
+        try:
+            self.auth.get_user_by_password(username, password, remember=True, save_session=True)
+            response_code = '200'
+            self.set_response(response_code)
+        except (InvalidAuthIdError, InvalidPasswordError) as e:
+            #logging.info('Login failed for user %s because of %s', username, type(e))
+            self.abort(401)
+
+
+class LogoutHandler(basehandler.BaseHandler):
+
+    @basehandler.user_required
+    def get(self):
+        self.auth.unset_session()
+        self.set_response('200', data={"message": "Logout successful."})

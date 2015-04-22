@@ -7,6 +7,8 @@ from google.net.proto.ProtocolBuffer import ProtocolBufferDecodeError
 from utils import account_utils, session_utils, urlhash, text_utils
 from utils.country_utils import CountryCodeList, CountryList
 
+import webapp2_extras.appengine.auth.models as auth_models
+
 
 class Image(ndb.Expando):
     full_size_image = ndb.BlobProperty(indexed=False, required=True)
@@ -280,6 +282,10 @@ class Establishment(ndb.Model):
             'primaryImage': Image.get(self.primaryImage),
             'url': self.url
         }
+
+
+class User(auth_models.User):
+    email = ndb.StringProperty()
 
 
 class AccountId(ndb.Model):

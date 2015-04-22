@@ -3,6 +3,12 @@ import fix_path
 import time
 import re
 import json
+import os
+import jinja2
+
+template_dir = os.path.join(os.path.dirname(__file__), '../static/templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.autoescape'], autoescape = True)
+#jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.autoescape'], variable_start_string='((', variable_end_string='))', autoescape=True)
 
 import webapp2
 from google.appengine.datastore.datastore_query import Cursor
@@ -12,17 +18,8 @@ from utils import urlhash
 from models import models
 from functools import wraps
 
-def get_list(func):
+from webapp2_extras import auth, sessions
 
-    @wraps(func)
-    def get_list(self, *ar, **kw):
-        kw['limit'], kw['cursor'] = self.get_limit_and_cursor()
-
-        extra_headers, data = func(self, *ar, **kw)
-
-        self.set_response('200 OK', extra_headers=extra_headers, data=data)
-
-    return get_list
 
 def create(func):
 
@@ -47,10 +44,87 @@ def get(func):
     return get
 
 
+def get_list(func):
+
+    @wraps(func)
+    def get_list(self, *ar, **kw):
+        kw['limit'], kw['cursor'] = self.get_limit_and_cursor()
+
+        extra_headers, data = func(self, *ar, **kw)
+
+        self.set_response('200 OK', extra_headers=extra_headers, data=data)
+
+    return get_list
+
+
+def user_required(func):
+    """
+        Requires that a user be logged in to access the resource
+    """
+    @wraps(func)
+    def check_login(self, *ar, **kw):
+        if not self.user:
+            self.abort(401)
+        else:
+            return func(self, *ar, **kw)
+
+    return check_login
+
+
 class BaseHandler(webapp2.RequestHandler):
 
     def __init__(self, request, response):
         super(BaseHandler, self).__init__(request, response)
+
+
+    def write(self, *a, **kw):
+        self.response.write(*a, **kw)
+
+
+    def render_str(self, template, **params):
+        t = jinja_env.get_template(template)
+        return t.render(params)
+
+
+    def render(self, template, **kw):
+        self.write(self.render_str(template, **kw))
+
+
+    @webapp2.cached_property
+    def session_store(self):
+        return sessions.get_store(request=self.request)
+
+
+    @webapp2.cached_property
+    def session(self):
+        return self.session_store.get_session(backend='datastore')
+
+
+    def dispatch(self):
+        try:
+            super(BaseHandler, self).dispatch()
+        finally:
+            # Save the session after each request
+            self.session_store.save_sessions(self.response)
+
+
+    @webapp2.cached_property
+    def auth(self):
+        return auth.get_auth(request=self.request)
+
+
+    @webapp2.cached_property
+    def user(self):
+        return self.auth.get_user_by_session()
+
+
+    @webapp2.cached_property
+    def user_model(self):
+        user_model, timestamp = self.auth.store.user_model.get_by_auth_token(
+                self.user['user_id'],
+                self.user['token']) if self.user else (None, None)
+
+        return user_model
 
 
     def get(self, *ar, **kw):
