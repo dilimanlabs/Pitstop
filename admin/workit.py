@@ -51,7 +51,7 @@ def WorkIt(cursor=None, num_updated=0):
     #Convenience Store
     # aaz9Iq08oEK
 
-    id = 'aaxtUtVuYIm' #motolite
+    #id = 'aaxtUtVuYIm' #motolite
     #image_id = 'aaAd8fYD7yS'
 
     #id = 'aaz3Lw0fjSC' # yokohama
@@ -62,6 +62,9 @@ def WorkIt(cursor=None, num_updated=0):
 
     #id = 'aaAlhw4X3xA' # rapide
     #image_id = 'aaAewzdwpCC'
+
+    id = '' #shell
+    image_id = ''
 
     biz_model = models.Business.get_by_id(id=urlhash.base62_to_int(id))
 

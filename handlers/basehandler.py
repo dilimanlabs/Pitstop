@@ -1,24 +1,23 @@
 import fix_path
 
-import time
-import re
+import jinja2
 import json
 import os
-import jinja2
+import re
+import time
+import webapp2
+
+from functools import wraps
+from google.appengine.datastore.datastore_query import Cursor
+from libs import jsonschema
+from models import models
+from utils import urlhash
+from webapp2_extras import auth, sessions
+
 
 template_dir = os.path.join(os.path.dirname(__file__), '../static/templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.autoescape'], autoescape = True)
 #jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.autoescape'], variable_start_string='((', variable_end_string='))', autoescape=True)
-
-import webapp2
-from google.appengine.datastore.datastore_query import Cursor
-
-from libs import jsonschema
-from utils import urlhash
-from models import models
-from functools import wraps
-
-from webapp2_extras import auth, sessions
 
 
 def create(func):

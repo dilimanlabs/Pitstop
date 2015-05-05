@@ -48,14 +48,14 @@ class AccountCollectionHandler(basehandler.BaseHandler):
         email = str(data['account']['email'])
         password = str(data['account']['password'])
 
-        success, info = self.user_model.create_user(username,
+        success, info = self.auth.store.user_model.create_user(username,
             unique_properties=['email_address'],
             email_address=email, password_raw=password,
             verified=False)
 
         if success:
             user_id = info.get_id()
-            token = self.user_model.create_signup_token(user_id)
+            token = self.auth.store.user_model.create_signup_token(user_id)
 
             sender_address = "<dilimanlabs@gmail.com>"
             subject = "Account Verification"
@@ -75,15 +75,12 @@ class AccountItemHandler(basehandler.BaseHandler):
 
     @basehandler.user_required
     def get(self, *ar, **kw):
-        auth = self.auth
-        data = auth.get_session_data()
-        user_token = models.User.token_model.get_key(data['user_id'], 'auth', data['token']).get()
-
-        if user_token:
-            user = self.user
-            self.set_response('200', data={"message": "You are logged in as " + user.auth_ids[0]})
+        user_model = self.user_model
+        if user_model:
+            self.set_response('200', data={"message": "You are logged in as " + user_model.auth_ids[0]})
         else:
-            self.abort(401)
+            message = "Session has expired."
+            self.abort(401, detail=message)
 
 
 class AccountItemImageCollectionHandler(basehandler.BaseHandler):
@@ -125,7 +122,7 @@ class SignUpVerificationHandler(basehandler.BaseHandler):
         # self.auth.get_user_by_token(user_id, signup_token)
         # unfortunately the auth interface does not (yet) allow to manipulate
         # signup tokens concisely
-        user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
+        user, ts = self.auth.store.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
 
         if not user:
             self.abort(404)
